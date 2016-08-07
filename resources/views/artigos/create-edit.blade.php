@@ -27,7 +27,7 @@
                   <div class="form-group">
                     <label for="Descricao" class="col-lg-2 control-label">Descrição</label>
                     <div class="col-lg-10">
-                      <textarea class="form-control" rows="3" id="descricao" name="artigo"></textarea>
+                      <textarea class="form-control" rows="3" id="descricao" name="descricao"></textarea>
                     </div>
                   </div>
                   <div class="form-group">

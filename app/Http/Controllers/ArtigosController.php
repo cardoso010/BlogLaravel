@@ -22,7 +22,7 @@ class ArtigosController extends Controller
     public function postSave(Request $request){
         $artigos = [
             'nome' => $request->input('nome'),
-            'artigo' => $request->input('artigo')
+            'descricao' => $request->input('descricao')
         ];
         $artigo = \App\Models\Artigo::create($artigos);
         return redirect('artigos');

@@ -3,6 +3,6 @@
 @section('content')
 
 <h2>{{$artigo->nome}}</h2>
-<p>{{$artigo->artigo}}</p>
+<p>{{$artigo->descricao}}</p>
 
 @endsection

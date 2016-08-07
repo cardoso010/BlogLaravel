@@ -8,6 +8,6 @@ class Artigo extends Model
 {
     protected $fillable = [
         'nome',
-        'artigo'
+        'descricao'
     ];
 }

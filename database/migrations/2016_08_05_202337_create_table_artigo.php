@@ -15,7 +15,8 @@ class CreateTableArtigo extends Migration
         Schema::create('artigos', function(Blueprint $table){
             $table->increments('id');
             $table->string('nome');
-            $table->text('artigo');
+            $table->text('descricao');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
