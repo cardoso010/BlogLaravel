@@ -14,13 +14,13 @@ class CreateComentariosTable extends Migration
     {
         Schema::create('comentarios', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('artigo_id')->unsigned();
             $table->text('comentario');
             $table->timestamps();
         });
 
         Schema::table('comentarios', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('artigo_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('artigo_id')->references('id')->on('artigos');
         });
