@@ -14,11 +14,16 @@ class CreateTableArtigo extends Migration
     {
         Schema::create('artigos', function(Blueprint $table){
             $table->increments('id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
             $table->string('nome');
             $table->text('descricao');
             $table->timestamps();
         });
+
+        Schema::table('artigos', function(Blueprint $table){
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+
     }
 
     /**
