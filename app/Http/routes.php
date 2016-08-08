@@ -15,4 +15,8 @@ Route::get('/', function () {
     return redirect('artigos/');
 });
 
+//Route de artigos
 Route::controller('/artigos', 'ArtigosController');
+
+//Route de usuarios
+Route::controller('/users', 'UsersController');
