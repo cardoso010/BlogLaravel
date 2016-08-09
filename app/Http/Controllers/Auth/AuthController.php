@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -31,6 +34,13 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
+     * Caminho de login.
+     *
+     * @var string
+     */
+    protected $loginPath = '/login';
+
+    /**
      * Create a new authentication controller instance.
      *
      * @return void
@@ -39,6 +49,78 @@ class AuthController extends Controller
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
+
+    /**
+     * Retorna view de login
+     *
+     * @return void
+     */
+    public function getLogin()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Loga no sistema
+     *
+     * @return void
+     */
+    public function postLogin(Request $request)
+    {
+        $user = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password')
+        ];
+        if(Auth::attempt($user)){
+            return redirect('/');
+        }
+        else
+        {
+            return redirect('/login')->with('flash_noticia', 'Usuario não existe');
+        }
+    }
+
+    /**
+     * Da logout no sistema
+     *
+     * @return void
+     */
+    public function getLogout()
+    {
+        Auth::logout();
+        return view('artigos');
+    }
+
+    /**
+     * Retorna view de cadastro
+     *
+     * @return view de registrar
+     */
+    public function getRegister()
+    {
+        return view('auth.register');
+    }
+
+    /**
+     * Salvar usuario
+     *
+     * @return view de registrar
+     */
+    public function postRegister(Request $request)
+    {
+        $users = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'password_confirmation' => $request->input('password_confirmation')
+        ];
+        $user = App\Models\User::create($users);
+
+
+        return view('auth.register');
+    }
+
+
 
     /**
      * Get a validator for an incoming registration request.

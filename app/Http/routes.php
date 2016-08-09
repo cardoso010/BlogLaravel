@@ -19,4 +19,8 @@ Route::get('/', function () {
 Route::controller('/artigos', 'ArtigosController');
 
 //Route de usuarios
-Route::controller('/users', 'UsersController');
+//Route::controller('/auth', 'Auth\AuthController');
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

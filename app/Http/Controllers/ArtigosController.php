@@ -7,11 +7,16 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests;
 use DB;
 use App\Models\Artigo;
+use Auth;
 
 class ArtigosController extends Controller
 {
     public function getIndex(){
-        $artigos = Artigo::all();
+        //$artigos = Artigo::all();
+        $artigos = DB::table('artigos')
+                            ->select('artigos.id', 'artigos.nome', 'artigos.descricao', 'users.name')
+                            ->leftJoin('users', 'users.id', '=', 'artigos.user_id')
+                            ->get();
         return view('artigos.index', compact('artigos'));
     }
 
@@ -20,11 +25,14 @@ class ArtigosController extends Controller
     }
 
     public function postSave(Request $request){
-        $artigos = [
-            'nome' => $request->input('nome'),
-            'descricao' => $request->input('descricao')
-        ];
-        $artigo = \App\Models\Artigo::create($artigos);
+        if(Auth::check()){
+            $artigos = [
+                'nome' => $request->input('nome'),
+                'user_id' => Auth::user()->id,
+                'descricao' => $request->input('descricao')
+            ];
+            $artigo = \App\Models\Artigo::create($artigos);
+        }
         return redirect('artigos');
     }
 
