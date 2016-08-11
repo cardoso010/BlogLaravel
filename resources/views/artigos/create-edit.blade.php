@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="well bs-component">
-          <form method="post" action="/artigos/save" class="form-horizontal">
+          <form method="post" action="{{ url('/artigos/save') }} " class="form-horizontal">
               {!! csrf_field() !!}
             <fieldset>
               <legend>Artigo</legend>
