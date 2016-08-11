@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
+use App\Models\Comentario;
 
 class ComentariosController extends Controller
 {
@@ -15,7 +16,7 @@ class ComentariosController extends Controller
                 'artigo_id' => $request->input('artigo_id'),
                 'comentario' => $request->input('comentario')
             ];
-            $comentario = \App\Models\Comentario::create($value);
+            $comentario = Comentario::create($value);
         }
         $link = "artigos/detalhe/" . $request->input('artigo_id');
         return redirect($link);

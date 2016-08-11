@@ -37,7 +37,7 @@ class ArtigosController extends Controller
     }
 
     public function getDetalhe($id){
-        $artigo = \App\Models\Artigo::find($id);
+        $artigo = Artigo::find($id);
 
         $comentarios = DB::table('comentarios')
                             ->select('comentarios.comentario', 'users.name')
