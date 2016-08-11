@@ -21,4 +21,8 @@ class ComentariosController extends Controller
         $link = "artigos/detalhe/" . $request->input('artigo_id');
         return redirect($link);
     }
+
+    public function missingMethod($params = array()){
+        return 'Erro 404, pagina nao encontrada!';
+    }
 }

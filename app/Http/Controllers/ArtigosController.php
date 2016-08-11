@@ -46,4 +46,8 @@ class ArtigosController extends Controller
                             ->get();
         return view('artigos.detalhe', compact('artigo', 'comentarios'));
     }
+
+    public function missingMethod($params = array()){
+        return 'Erro 404, pagina nao encontrada!';
+    }
 }
