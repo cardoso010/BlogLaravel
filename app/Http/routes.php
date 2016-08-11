@@ -18,6 +18,9 @@ Route::get('/', function () {
 //Route de artigos
 Route::controller('/artigos', 'ArtigosController');
 
+//Route para Comentarios
+Route::controller('/comentarios', 'ComentariosController');
+
 //Route de usuarios
 //Route::controller('/auth', 'Auth\AuthController');
 

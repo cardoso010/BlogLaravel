@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Criar artigo
+@endsection
+
 @section('content')
 
 <div>
@@ -32,7 +36,7 @@
               </div>
               <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                     <button type="reset" class="btn btn-default">Cancel</button>
                 </div>
               </div>

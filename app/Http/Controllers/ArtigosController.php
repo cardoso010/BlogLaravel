@@ -38,6 +38,12 @@ class ArtigosController extends Controller
 
     public function getDetalhe($id){
         $artigo = \App\Models\Artigo::find($id);
-        return view('artigos.detalhe', compact('artigo'));
+
+        $comentarios = DB::table('comentarios')
+                            ->select('comentarios.comentario', 'users.name')
+                            ->leftJoin('users', 'users.id', '=', 'comentarios.user_id')
+                            ->where('comentarios.artigo_id', '=', $id)
+                            ->get();
+        return view('artigos.detalhe', compact('artigo', 'comentarios'));
     }
 }
