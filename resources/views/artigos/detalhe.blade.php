@@ -10,6 +10,7 @@
                 <p>{{$artigo->descricao}}</p>
             </div>
         </div>
+        @if(Auth::check())
           <div class="bs-component">
             <div class="modal">
               <div class="modal-dialog">
@@ -31,6 +32,7 @@
               </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
 
