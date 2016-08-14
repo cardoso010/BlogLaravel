@@ -23,15 +23,16 @@ Criar artigo
             <fieldset>
               <legend>Artigo</legend>
               <div class="form-group">
+                  <input type="hidden" id="id" name="id" value="{{ $artigo->id }}" />
                 <label for="inputNome" class="col-lg-2 control-label">Nome</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Nome" />
+                  <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Nome" value="{{ $artigo->nome }}" />
                 </div>
               </div>
               <div class="form-group">
                 <label for="Descricao" class="col-lg-2 control-label">Descrição</label>
                 <div class="col-lg-10">
-                  <textarea class="form-control" rows="3" id="descricao" name="descricao"></textarea>
+                  <textarea class="form-control" rows="3" id="descricao" name="descricao">{{ $artigo->descricao }}</textarea>
                 </div>
               </div>
               <div class="form-group">

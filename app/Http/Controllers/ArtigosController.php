@@ -11,7 +11,8 @@ use Auth;
 
 class ArtigosController extends Controller
 {
-    public function getIndex(){
+    public function getIndex()
+    {
         //$artigos = Artigo::all();
         $artigos = DB::table('artigos')
                             ->select('artigos.id', 'artigos.nome', 'artigos.descricao', 'users.name')
@@ -20,23 +21,26 @@ class ArtigosController extends Controller
         return view('artigos.index', compact('artigos'));
     }
 
-    public function getCreate(){
+    public function getCreate()
+    {
         return view('artigos.create-edit');
     }
 
-    public function postSave(Request $request){
+    public function postSave(Request $request)
+    {
         if(Auth::check()){
             $artigos = [
                 'nome' => $request->input('nome'),
                 'user_id' => Auth::user()->id,
                 'descricao' => $request->input('descricao')
             ];
-            $artigo = \App\Models\Artigo::create($artigos);
+            $artigo = Artigo::create($artigos);
         }
         return redirect('artigos');
     }
 
-    public function getDetalhe($id){
+    public function getDetalhe($id)
+    {
         $artigo = Artigo::find($id);
 
         $comentarios = DB::table('comentarios')
@@ -47,7 +51,27 @@ class ArtigosController extends Controller
         return view('artigos.detalhe', compact('artigo', 'comentarios'));
     }
 
-    public function missingMethod($params = array()){
+    public function getEdit($id)
+    {
+        $artigo = Artigo::find($id);
+
+        return view('artigos.edit', compact('artigo'));
+    }
+
+    public function postEdit(Request $request)
+    {
+        if(Auth::check()){
+            $artigo = Artigo::find($request->input('id'));
+
+            $artigo->nome = $request->input('nome');
+            $artigo->descricao = $request->input('descricao');
+            $artigo->save();
+        }
+        return view('artigos');
+    }
+
+    public function missingMethod($params = array())
+    {
         return 'Erro 404, pagina nao encontrada!';
     }
 }
