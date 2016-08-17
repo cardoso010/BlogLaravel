@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests;
-use DB;
-use App\Models\Artigo;
 use Auth;
+use App\Repository\IRepository\IArtigoRepository;
+use App\Repository\ComentarioRepository;
 
 class ArtigosController extends Controller
 {
+    public function __construct(IArtigoRepository $artigo)
+    {
+        $this->artigo = $artigo;
+        $this->comentario = new ComentarioRepository();
+    }
+
     public function getIndex()
     {
-        //$artigos = Artigo::all();
-        $artigos = DB::table('artigos')
-                            ->select('artigos.id', 'artigos.nome', 'artigos.descricao', 'users.name')
-                            ->leftJoin('users', 'users.id', '=', 'artigos.user_id')
-                            ->get();
+        $artigos = $this->artigo->selectArtigoUserAll();
         return view('artigos.index', compact('artigos'));
     }
 
@@ -29,31 +31,24 @@ class ArtigosController extends Controller
     public function postSave(Request $request)
     {
         if(Auth::check()){
-            $artigos = [
-                'nome' => $request->input('nome'),
-                'user_id' => Auth::user()->id,
-                'descricao' => $request->input('descricao')
-            ];
-            $artigo = Artigo::create($artigos);
+            $value = $this->artigo->returnValues($request);
+            $return = $this->artigo->save($value);
         }
         return redirect('artigos');
     }
 
     public function getDetalhe($id)
     {
-        $artigo = Artigo::find($id);
+        $artigo = $this->artigo->find($id);
 
-        $comentarios = DB::table('comentarios')
-                            ->select('comentarios.comentario', 'users.name')
-                            ->leftJoin('users', 'users.id', '=', 'comentarios.user_id')
-                            ->where('comentarios.artigo_id', '=', $id)
-                            ->get();
+        $comentarios = $this->comentario->selectComentarioUserAll($id);
+
         return view('artigos.detalhe', compact('artigo', 'comentarios'));
     }
 
     public function getEdit($id)
     {
-        $artigo = Artigo::find($id);
+        $artigo = $this->artigo->find($id);
 
         return view('artigos.edit', compact('artigo'));
     }
@@ -61,7 +56,7 @@ class ArtigosController extends Controller
     public function postEdit(Request $request)
     {
         if(Auth::check()){
-            $artigo = Artigo::find($request->input('id'));
+            $artigo = $this->artigo->find($request->input('id'));
 
             $artigo->nome = $request->input('nome');
             $artigo->descricao = $request->input('descricao');

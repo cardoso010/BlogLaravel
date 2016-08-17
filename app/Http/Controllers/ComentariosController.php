@@ -6,17 +6,19 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
 use App\Models\Comentario;
+use App\Repository\IRepository\IComentarioRepository;
 
 class ComentariosController extends Controller
 {
+    public function __construct(IComentarioRepository $comentario)
+    {
+        $this->comentario = $comentario;
+    }
+
     public function postSave(Request $request){
         if(Auth::check()){
-            $value = [
-                'user_id' => Auth::user()->id,
-                'artigo_id' => $request->input('artigo_id'),
-                'comentario' => $request->input('comentario')
-            ];
-            $comentario = Comentario::create($value);
+            $value = $this->comentario->returnValues($request);
+            $comentario = $this->comentario->save($value);
         }
         $link = "artigos/detalhe/" . $request->input('artigo_id');
         return redirect($link);

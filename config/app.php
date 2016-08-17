@@ -158,6 +158,9 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
 
+        //Inject Dependency
+        App\Service\BackendServiceProvider::class,
+
     ],
 
     /*
